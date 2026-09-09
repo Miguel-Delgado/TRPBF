@@ -54,7 +54,7 @@
 
 ## Инструкция по запуску
 
-1. Сохраните код в файл `tournament.py`.
+1. Сохраните код в файл `main.py`.
 2. Запустите из командной строки:
    ```bash
-   python tournament.py
+   python main.py
