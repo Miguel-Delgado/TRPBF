@@ -5,6 +5,7 @@ def create_tournament():
     name = input("Введите название турнира: ").strip()
     return name if name else "Турнир без названия"
 
+
 # ----- Функция 2: добавление участников (ввод имён) -----
 def add_participants():
     while True:
@@ -24,6 +25,7 @@ def add_participants():
         participants.append(name if name else f"Участник {i}")
     return participants
 
+
 # ----- Функция 3: проверка чётности и добавление 'bye' -----
 def ensure_even_number(participants):
     if len(participants) % 2 != 0:
@@ -31,6 +33,7 @@ def ensure_even_number(participants):
         print("Количество участников нечётное. Добавлен виртуальный участник 'None_name'.")
         return participants, True
     return participants, False
+
 
 # ----- Функция 4: жеребьёвка (формирование пар) -----
 def draw_pairs(participants):
@@ -40,6 +43,7 @@ def draw_pairs(participants):
     for i in range(0, len(shuffled), 2):
         pairs.append((shuffled[i], shuffled[i+1]))
     return pairs
+
 
 # ----- Функция 5: вывод пар на экран -----
 def display_pairs(tournament_name, pairs):
@@ -53,6 +57,7 @@ def display_pairs(tournament_name, pairs):
         else:
             print(f"  Пара #{idx}: {p1} vs {p2}")
     print("=" * 50)
+
 
 # ----- Главный сценарий (последовательный вызов функций) -----
 def main():
