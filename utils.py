@@ -1,22 +1,24 @@
 """Вспомогательные функции безопасного ввода данных."""
 
 
-def input_int(prompt: str) -> int:
+def input_int(prompt: str, minimum: int = 1) -> int:
     """
     Запрашивает у пользователя целое число и возвращает его.
 
-    Число должно быть больше 0. При некорректном вводе
-    (не целое число или число <= 0) печатает сообщение
-    об ошибке и повторяет запрос.
+    Число не должно быть меньше minimum (по умолчанию больше нуля).
+    При некорректном вводе печатает сообщение об ошибке и повторяет
+    запрос.
     """
     while True:
         try:
             value = int(input(prompt))
-            if value <= 0:
-                raise ValueError("Число должно быть больше 0")
+            if value < minimum:
+                raise ValueError(
+                    f"Число должно быть не меньше {minimum}"
+                )
             return value
-        except ValueError as e:
-            print(f"Ошибка ввода: {e}. Попробуйте снова.")
+        except ValueError as error:
+            print(f"Ошибка ввода: {error}. Попробуйте снова.")
 
 
 def input_name(prompt: str, fallback: str = "") -> str:
