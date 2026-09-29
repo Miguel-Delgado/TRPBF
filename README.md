@@ -60,78 +60,11 @@
 Хранилище — SQLite (`data/tournament.db`, создаётся автоматически при
 первом запуске). Схема создаётся самими моделями через `init_db()`.
 
-### Таблица `tournaments`
+## Основные сущности 
 
-| Поле | Тип | Ограничения |
-|------|-----|-------------|
-| `id` | INTEGER | PRIMARY KEY AUTOINCREMENT |
-| `name` | TEXT | NOT NULL |
-| `status` | TEXT | NOT NULL, DEFAULT `'active'` |
-| `created_at` | TEXT | NOT NULL (ISO-время) |
-
-Индекс: `idx_tournaments_status (status)`.
-
-### Таблица `participants`
-
-| Поле | Тип | Ограничения |
-|------|-----|-------------|
-| `id` | INTEGER | PRIMARY KEY AUTOINCREMENT |
-| `tournament_id` | INTEGER | NOT NULL, FK → `tournaments(id)` ON DELETE CASCADE |
-| `name` | TEXT | NOT NULL |
-
-Индекс: `idx_participants_tournament (tournament_id)`.
-
-### Таблица `matches`
-
-| Поле | Тип | Ограничения |
-|------|-----|-------------|
-| `id` | INTEGER | PRIMARY KEY AUTOINCREMENT |
-| `tournament_id` | INTEGER | NOT NULL, FK → `tournaments(id)` ON DELETE CASCADE |
-| `round` | INTEGER | NOT NULL, DEFAULT `1` |
-| `player1_id` | INTEGER | FK → `participants(id)` ON DELETE SET NULL |
-| `player2_id` | INTEGER | FK → `participants(id)` ON DELETE SET NULL |
-| `is_played` | INTEGER | NOT NULL, DEFAULT `0` |
-
-Индекс: `idx_matches_tournament (tournament_id, round)`.
-
-### Таблица `results`
-
-| Поле | Тип | Ограничения |
-|------|-----|-------------|
-| `id` | INTEGER | PRIMARY KEY AUTOINCREMENT |
-| `match_id` | INTEGER | NOT NULL, UNIQUE, FK → `matches(id)` ON DELETE CASCADE |
-| `winner_id` | INTEGER | FK → `participants(id)` ON DELETE SET NULL |
-| `score` | TEXT | NOT NULL, DEFAULT `''` |
-| `created_at` | TEXT | NOT NULL |
-
-Индекс: `idx_results_winner (winner_id)`.
-
-### Связи
-
-- `tournaments` 1 → ∞ `participants` (удаление турнира удаляет участников).
-- `tournaments` 1 → ∞ `matches`.
-- `matches` ∞ → 1 `participants` дважды (`player1_id`, `player2_id`).
-- `matches` 1 → 1 `results` (ограничение `UNIQUE` на `match_id`).
-- `results` ∞ → 1 `participants` (`winner_id`).
-
-Внешние ключи включены при каждом соединении: `PRAGMA foreign_keys = ON`.
-
-## Архитектура
-
-Проект построен по слоям, чтобы точка входа оставалась короткой, а логика
-была изолирована и легко тестировалась:
-
-```text
-UI (app.py) → сервиc (services/) → репозитории (repositories/) → модели (models/) → БД (database.py)
-```
-
-- **models/** — сущности предметной области и создание их таблиц.
-- **repositories/** — доступ к данным (SQL, CRUD) отдельно для каждой сущности.
-- **services/** — бизнес-логика (жеребьёвка, результаты, зачёт), использует
-  репозитории и не знает про ввод/вывод.
-- **app.py** — консольное меню и вывод, вызывает только сервис.
-- **database.py** — соединение с SQLite и `init_db()`.
-- **main.py** — точка входа: `init_db()` + `TournamentApp(...).run()`.
+- **Турнир** – словарь с ключами `name`, `participants`, `pairs`.
+- **Участник** – словарь вида `{"id": 1, "name": "Иван"}`.
+- **Пара** – словарь вида `{"player1": "Иван", "player2": "Петр"}`.
 
 ## Структура проекта
 
