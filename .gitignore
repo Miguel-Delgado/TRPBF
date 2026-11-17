@@ -5,3 +5,5 @@ __pycache__/
 venv/
 *.db
 data/*.db
+db.sqlite3
+trpbf_project/__pycache__/

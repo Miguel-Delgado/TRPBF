@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная — Система организации турниров{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1>Добро пожаловать в систему организации турниров</h1>
+        <p class="lead">
+            Приложение для автоматизации организации турниров: создание турнира,
+            регистрация участников, жеребьёвка (формирование матчей первого тура),
+            внесение результатов и подсчёт зачёта.
+        </p>
+        <h2>Возможности:</h2>
+        <ul>
+            <li>Создание и управление турнирами</li>
+            <li>Регистрация участников турнира</li>
+            <li>Жеребьёвка и формирование матчей</li>
+            <li>Внесение результатов матчей</li>
+            <li>Подсчёт зачёта (число побед участников)</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Последние турниры</h5>
+            </div>
+            <div class="card-body">
+                {% if tournaments %}
+                    {% for tournament in tournaments %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>{{ tournament.name }}</span>
+                        <span class="badge bg-{% if tournament.is_active %}success{% else %}secondary{% endif %}">
+                            {{ tournament.status }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">Турниров пока нет. Создайте первый в консольном приложении.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

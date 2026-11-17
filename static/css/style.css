@@ -1,0 +1,27 @@
+/* Кастомные стили для системы организации турниров */
+
+body {
+    padding-bottom: 60px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.badge {
+    font-size: 0.875rem;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.list-group-item {
+    border-left: none;
+    border-right: none;
+}
+
+footer {
+    margin-top: auto;
+}
