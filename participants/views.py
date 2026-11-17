@@ -30,9 +30,9 @@ def participant_list(request, tournament_id=None):
             tournaments = service.list_tournaments()
             all_participants = []
             for tournament in tournaments:
+                assert tournament.id is not None
                 participants = service.list_participants(tournament.id)
-                for p in participants:
-                    all_participants.append((tournament, p))
+                all_participants.extend((tournament, p) for p in participants)
             context = {
                 'all_participants': all_participants,
             }

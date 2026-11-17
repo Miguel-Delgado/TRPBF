@@ -30,9 +30,9 @@ def match_list(request, tournament_id=None):
             tournaments = service.list_tournaments()
             all_matches = []
             for tournament in tournaments:
+                assert tournament.id is not None
                 matches = service.list_matches(tournament.id)
-                for m in matches:
-                    all_matches.append((tournament, m))
+                all_matches.extend((tournament, m) for m in matches)
             context = {
                 'all_matches': all_matches,
             }
