@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Турниры (SQL отчёт) — Система организации турниров{% endblock %}
+
+{% block content %}
+<h1>Список турниров (SQL-запрос)</h1>
+
+<p class="text-muted">
+    Источник данных: parametrized SQL-запрос к таблице <code>tournaments</code>.
+</p>
+
+{% if tournaments %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Статус</th>
+                <th>Создан</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tournament in tournaments %}
+            <tr>
+                <td>{{ tournament.id }}</td>
+                <td>{{ tournament.name }}</td>
+                <td>
+                    <span class="badge bg-{% if tournament.status == 'active' %}success{% else %}secondary{% endif %}">
+                        {{ tournament.status }}
+                    </span>
+                </td>
+                <td>{{ tournament.created_at }}</td>
+                <td>
+                    <a href="{% url 'reports:tournament_participants_report' tournament.id %}" class="btn btn-sm btn-outline-primary">Участники</a>
+                    <a href="{% url 'reports:tournament_matches_report' tournament.id %}" class="btn btn-sm btn-outline-primary">Матчи</a>
+                    <a href="{% url 'reports:tournament_stats_report' tournament.id %}" class="btn btn-sm btn-outline-primary">Статистика</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    Турниров не найдено.
+</div>
+{% endif %}
+
+<div class="mt-3">
+    <a href="{% url 'reports:report_index' %}" class="btn btn-secondary">К отчётам</a>
+</div>
+{% endblock %}

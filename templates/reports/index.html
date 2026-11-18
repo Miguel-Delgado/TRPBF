@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Отчёты SQL — Система организации турниров{% endblock %}
+
+{% block content %}
+<h1>Отчёты на основе SQL-запросов</h1>
+<p class="lead">
+    Страница для просмотра результатов параметризованных SQL-запросов к
+    базе данных системы организации турниров.
+</p>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Турниры</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="{% url 'reports:tournament_list_report' %}">
+                            Список всех турниров
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>По турниру</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="{% url 'reports:tournament_participants_report' 1 %}">
+                            Участники турнира (пример id=1)
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'reports:tournament_matches_report' 1 %}">
+                            Матчи турнира (пример id=1)
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'reports:tournament_results_report' 1 %}">
+                            Результаты турнира (пример id=1)
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'reports:tournament_stats_report' 1 %}">
+                            Статистика турнира (пример id=1)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Общая статистика</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="{% url 'reports:overall_statistics_report' %}">
+                            Общая статистика по всем турнирам
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'homepage:home' %}" class="btn btn-secondary">На главную</a>
+</div>
+{% endblock %}

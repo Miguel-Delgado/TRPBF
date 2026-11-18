@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Общая статистика (SQL) — Система организации турниров{% endblock %}
+
+{% block content %}
+<h1>Общая статистика по всем турнирам</h1>
+
+<p class="text-muted">
+    Источник данных: агрегирующие SQL-запросы с <code>COUNT</code>,
+    <code>AVG</code>, <code>GROUP BY</code>, <code>HAVING</code> и
+    <code>JOIN</code>.
+</p>
+
+{% if stats %}
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Всего турниров</h5>
+                <p class="display-4">{{ stats.total_tournaments }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">Всего участников</h5>
+                <p class="display-4">{{ stats.total_participants }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">Всего матчей</h5>
+                <p class="display-4">{{ stats.total_matches }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center bg-warning text-white">
+            <div class="card-body">
+                <h5 class="card-title">Всего результатов</h5>
+                <p class="display-4">{{ stats.total_results }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<h3>Турниры с количеством участников</h3>
+<p class="text-muted">
+    Запрос с <code>LEFT JOIN</code>, <code>GROUP BY</code> и
+    <code>COUNT</code> для подсчёта участников в каждом турнире.
+</p>
+
+{% if tournaments_with_count %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Турнир</th>
+                <th>Статус</th>
+                <th>Участников</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tournaments_with_count %}
+            <tr>
+                <td>{{ t.name }}</td>
+                <td>{{ t.status }}</td>
+                <td>{{ t.participant_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    Данных по турнирам не найдено.
+</div>
+{% endif %}
+
+<h3>Статистика побед участников (все турниры)</h3>
+<p class="text-muted">
+    Запрос с <code>LEFT JOIN</code>, <code>GROUP BY</code> и
+    <code>HAVING COUNT(r.id) > 0</code> для показа только участников с победами.
+</p>
+
+{% if win_statistics %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Место</th>
+                <th>Участник</th>
+                <th>Побед</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ws in win_statistics %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ ws.name }}</td>
+                <td>{{ ws.wins }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    Данных о победах не найдено.
+</div>
+{% endif %}
+
+<div class="mt-3">
+    <a href="{% url 'reports:report_index' %}" class="btn btn-secondary">К отчётам</a>
+</div>
+{% endblock %}
