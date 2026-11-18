@@ -232,3 +232,10 @@ python manage.py runserver
 Консольное приложение (`python main.py`) продолжает работать независимо.
 
 
+
+## ПР10 — Django Admin и ORM запросы
+
+1. Admin panel created in reports/admin.py
+2. 15 ORM expressions implemented
+3. All 45 tests pass, flake8 clean
+4. Git commit PR10 added
