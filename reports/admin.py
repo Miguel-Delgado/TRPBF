@@ -11,7 +11,6 @@ class TournamentAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     search_fields = ('name',)
     ordering = ('-created_at',)
-    date_hierarchy = 'created_at'
     readonly_fields = ('created_at',)
 
     fieldsets = (
@@ -59,7 +58,7 @@ class MatchAdmin(admin.ModelAdmin):
         p1_name = obj.player1.name if obj.player1 else '—'
         p2_name = obj.player2.name if obj.player2 else '—'
         players_text = f'{p1_name} vs {p2_name}'
-        return players_text[:32] + '...' if len(players_text) > 32 else players_text
+        players_text = players_text[:32] + '...' if len(players_text) > 32 else players_text
 
     get_players.short_description = 'Игроки'
 
@@ -77,7 +76,6 @@ class ResultAdmin(admin.ModelAdmin):
     search_fields = ('match__tournament__name', 'score')
     ordering = ('-created_at',)
     raw_id_fields = ('match', 'winner')
-    date_hierarchy = 'created_at'
 
     def winner_display(self, obj):
         """Display winner name."""

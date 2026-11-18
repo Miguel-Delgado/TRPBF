@@ -1,7 +1,0 @@
-## ПР10: Django Admin и ORM запросы
-
-1. Admin panel created in reports/admin.py with Tournament, Participant, Match, Result registration
-2. List display, filters, search fields configured for each model
-3. 15 ORM expressions implemented: filter, exclude, select_related, annotate, aggregate, values, order_by, get, create, update, delete, count, all, none, values_list
-4. All 45 tests pass, manage.py check OK, flake8 clean
-5. Git commit PR10: add Django Admin registration and 15 ORM expressions
