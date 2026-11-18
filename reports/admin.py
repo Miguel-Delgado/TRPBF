@@ -56,9 +56,6 @@ class MatchAdmin(admin.ModelAdmin):
     raw_id_fields = ('player1', 'player2', 'tournament')
 
     def get_players(self, obj):
-        """Display players information."""
-        p1 = obj.player1.name if obj.player1 else '—'
-        p2 = obj.player2.name if obj.player2 else '—'
         p1_name = obj.player1.name if obj.player1 else '—'
         p2_name = obj.player2.name if obj.player2 else '—'
         players_text = f'{p1_name} vs {p2_name}'
