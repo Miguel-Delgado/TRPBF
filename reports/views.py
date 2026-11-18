@@ -155,4 +155,3 @@ def overall_statistics_report(request):
         'win_statistics': win_statistics,
     }
     return render(request, 'reports/overall_statistics.html', context)
-
