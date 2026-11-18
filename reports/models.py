@@ -164,6 +164,4 @@ class Result(models.Model):
         else:
             winner_name = 'не определен'
         score_text = f', счет {self.score}' if self.score else ''
-        result_head = 'Результат матча #' + str(self.match_id) + ': '
-        result_text = result_head + winner_name + score_text
-        return result_text
+        return f'Результат матча #{self.match.id}: {winner_name}{score_text}'
