@@ -1,9 +1,8 @@
 """Представления приложения tournaments."""
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 from database import get_connection
-from models import Tournament
 from services import TournamentService
 
 
