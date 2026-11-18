@@ -35,7 +35,7 @@ class Tournament(models.Model):
         # Django не будет создавать/убирать таблицу при миграциях
 
     def __str__(self):
-        return f"Турнир #{self.id}: {self.name} [{self.status}]"
+        return f"Турнир #{self.pk}: {self.name} [{self.status}]"
 
     def is_active(self) -> bool:
         """Проверка: турнир еще не завершен."""
@@ -61,7 +61,7 @@ class Participant(models.Model):
         verbose_name_plural = 'Участники'
 
     def __str__(self):
-        return f"Участник #{self.id}: {self.name}"
+        return f"Участник #{self.pk}: {self.name}"
 
     def get_tournament(self):
         """Получить турнир participanta."""
@@ -119,7 +119,9 @@ class Match(models.Model):
     def winner_id(self):
         """Получить ID победителя прохода (bye)."""
         if self.is_bye:
-            return self.player1_id or self.player2_id
+            p1_id = self.player1.id if self.player1 else None
+            p2_id = self.player2.id if self.player2 else None
+            return p1_id or p2_id
         return None
 
 
@@ -155,20 +157,6 @@ class Result(models.Model):
         verbose_name_plural = 'Результаты'
 
     def __str__(self):
-        if self.winner:
-            winner_name = self.winner.name
-        elif self.winner_id is not None:
-            winner_name = f'id {self.winner_id}'
-        else:
-            winner_name = 'не определен'
-        score_text = f', счет {self.score}' if self.score else ''
-        if self.winner:
-            winner_name = self.winner.name
-        elif self.winner_id is not None:
-            winner_name = f'id {self.winner_id}'
-        else:
-            winner_name = 'не определен'
-        score_text = f', счет {self.score}' if self.score else ''
         if self.winner:
             winner_name = self.winner.name
         elif self.winner_id is not None:
