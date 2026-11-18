@@ -239,3 +239,11 @@ python manage.py runserver
 2. 15 ORM expressions implemented
 3. All 45 tests pass, flake8 clean
 4. Git commit PR10 added
+
+
+## ПР10 — Django Admin и ORM запросы
+
+1. Админская панель создана в файле reports/admin.py
+2. 15 ORM-запросов реализовано
+3. Все 45 тестов проходят, flake8 чисто
+4. Гит-коммит PR10 добавлен
